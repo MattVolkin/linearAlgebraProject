@@ -27,13 +27,12 @@ cityPM = df_cityp.to_numpy()
 curchM = df_church.to_numpy()
 sheildM = df_sheid.to_numpy()
 grassM = df_grass.to_numpy()
-R = (roadPM) @ roadM * 2 # point for roads that can be connected
-C = (cityPM@ cityM) * 2 + (sheildM) * 2 # points for cities
-M =  curchM * 2 # and monistaries
-G = (grassM) + (grassM  * 2*curchM) + (sheildM) * 2 # if there is a grass connection add points for 1 road and 1 city and 1 to 2 monistaries
 
+Road = ((roadPM) @ roadM) * 2 # point for roads that can be connected
+City = (cityPM@ cityM) * 2 + (sheildM) * 2 # points for cities
+Grass = (grassM) + (grassM  * 2*curchM) + (sheildM) * 2 # if there is a grass connection add points for 1 road and 1 city and 1 to 2 monistaries
+calcM = ((Road + City + Grass) / 6)* connectionsM # add them all up and divide by 6 * see if there is semitry
 
-calcM = ((R + C + G) / 6)* connectionsM # add them all up and divide by 6 
 answer = list()
 df =pd.DataFrame((roadPM))
 df_city.index = df_key.iloc[:, 1]   # for row names
